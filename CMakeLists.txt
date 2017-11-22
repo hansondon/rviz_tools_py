@@ -6,6 +6,7 @@ find_package(catkin REQUIRED
   tf
   geometry_msgs
   std_msgs
+  std_srvs
   visualization_msgs
   message_generation
 )
