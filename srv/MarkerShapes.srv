@@ -4,7 +4,7 @@
 # COLOR: color can be specified in either ColorRGBA or a color name. When both
 # both present, ColorRGBA value is considered first. If not specified, the server
 # will pick a random color. Alpha will be used with color if provided.
-# SCALE: scale is only used by Sphere, Cube, Arrow, Mesh and Text. # scaleVector3
+# SCALE: scale is only used by Sphere, Cube, Arrow, Mesh and Text. scaleVector3
 # will be considered first. If not available, use scale will set the same scale
 # value for 3 axes.
 # HEIGHT: height is used by Cylinder.
