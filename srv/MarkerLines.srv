@@ -15,5 +15,4 @@ float32 alpha
 float64 width
 uint32 lifetime_s
 ---
-std_msgs/Bool success
-
+bool success
