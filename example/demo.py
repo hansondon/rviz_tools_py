@@ -57,7 +57,7 @@ def cleanup_node():
 rospy.on_shutdown(cleanup_node)
 
 
-markers = rviz_tools.RvizMarkers('world', 'visualization_marker')
+markers = rviz_tools.RvizMarkers('map', 'visualization_marker')
 
 
 while not rospy.is_shutdown():

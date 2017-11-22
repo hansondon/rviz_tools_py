@@ -7,7 +7,7 @@ from std_msgs.msg import ColorRGBA
 from rviz_tools_py.srv import MarkerLines, MarkerShapes
 import rviz_tools
 
-class MarkerManager:
+class MarkerManager(object):
   """
   Provide a service to publish different markers using rviz tools
   """
