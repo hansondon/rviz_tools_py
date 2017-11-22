@@ -34,7 +34,6 @@ import numpy
 import random # randint
 
 # ROS includes
-import roslib
 import rospy
 import tf # tf/transformations.py
 from std_msgs.msg import Header, ColorRGBA
@@ -62,6 +61,8 @@ class RvizMarkers(object):
         # Create the Rviz Marker Publisher
         self.loadMarkerPublisher(wait_time)
 
+        # Make a list of the color names to choose from
+        self.all_colors = ['red', 'green', 'blue', 'grey', 'white', 'orange', 'yellow', 'brown', 'pink', 'lime_green', 'purple']
 
     def setDefaultMarkerParams(self):
         """
@@ -409,26 +410,11 @@ class RvizMarkers(object):
 
         @return color (ColorRGBA)
         """
-
-        # Make a list of the color names to choose from
-        all_colors = []
-        all_colors.append('red')
-        all_colors.append('green')
-        all_colors.append('blue')
-        all_colors.append('grey')
-        all_colors.append('white')
-        all_colors.append('orange')
-        all_colors.append('yellow')
-        all_colors.append('brown')
-        all_colors.append('pink')
-        all_colors.append('lime_green')
-        all_colors.append('purple')
-
         # Chose a random color name
-        rand_num =  random.randint(0, len(all_colors) - 1)
-        rand_color_name = all_colors[rand_num]
+        rand_num =  random.randint(0, len(self.all_colors) - 1)
+        rand_color_name = self.all_colors[rand_num]
 
-        return rand_color_name
+        return self.getColor(rand_color_name)
 
 
     def publishSphere(self, pose, color, scale, lifetime=None):
