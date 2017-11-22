@@ -3,10 +3,17 @@ project(rviz_tools_py)
 
 find_package(catkin REQUIRED
   rospy
-  geometry_msgs
-  visualization_msgs
   tf
+  geometry_msgs
+  std_msgs
+  visualization_msgs
+  message_generation
 )
 
-catkin_package()
 catkin_python_setup()
+add_service_files(FILES MarkerLines.srv MarkerShapes.srv)
+generate_messages(DEPENDENCIES geometry_msgs std_msgs visualization_msgs)
+
+catkin_package(
+  CATKIN_DEPENDS geometry_msgs message_runtime 
+)
