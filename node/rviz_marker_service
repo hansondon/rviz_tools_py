@@ -3,7 +3,7 @@
 import rospy
 from tf import transformations
 from geometry_msgs.msg import Pose, Point, Quaternion, Vector3, Polygon
-from std_msgs import ColorRGBA
+from std_msgs.msg import ColorRGBA
 from rviz_tools_py.srv import MarkerLines, MarkerShapes
 import rviz_tools
 
@@ -83,16 +83,16 @@ class MarkerManager:
     else:
       args = dict()
       # Parse pose
-      if not req.pose:
+      if not req.poses:
         rospy.logerr("[" + rospy.get_name + "]: Not enough pose")
         return {'success': False}
       else:
         if req.type == "Sphere":
-          args["list_of_spheres"] = req.pose
+          args["list_of_spheres"] = req.poses
         elif req.type == "Cube":
-          args["list_of_cubes"] = req.pose
+          args["list_of_cubes"] = req.poses
         else:
-          args["pose"] = req.pose[0]
+          args["pose"] = req.poses[0]
       # Parse color. If colorRGBA is empty, try using color instead. If not available, use random color.
       if req.colorRGBA != ColorRGBA():
         args["color"] = req.colorRGBA

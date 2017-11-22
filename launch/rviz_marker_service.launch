@@ -1,0 +1,4 @@
+<?xml version="1.0" ?>
+<launch>
+  <node name="rviz_marker_server" type="rviz_marker_service" pkg="rviz_tools_py" output="screen" />
+</launch>
