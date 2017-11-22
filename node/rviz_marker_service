@@ -12,8 +12,8 @@ class MarkerManager(object):
   """
   Provide a service to publish different markers using rviz tools
   """
-  def __init__(self):
-    self.marker_factory = rviz_tools.RvizMarkers('map', 'visualization_marker')
+  def __init__(self, base_frame):
+    self.marker_factory = rviz_tools.RvizMarkers(base_frame, 'visualization_marker')
     self.shapes_dict = {
       "Sphere":   self.marker_factory.publishSpheres,
       "Cube":     self.marker_factory.publishCubes,
@@ -98,15 +98,16 @@ class MarkerManager(object):
         else:
           args["pose"] = req.poses[0]
       # Parse color. If colorRGBA is empty, try using color instead. If not available, use random color.
-      if req.colorRGBA != ColorRGBA():
-        args["color"] = req.colorRGBA
-      else:
-        if req.color:
-          args["color"] = self.marker_factory.getColor(req.color)
+      if req.type != "Axis":
+        if req.colorRGBA != ColorRGBA():
+          args["color"] = req.colorRGBA
         else:
-          args["color"] = self.marker_factory.getRandomColor()
-        if req.alpha > 0 and req.alpha <= 1:
-          args["color"].a = req.alpha
+          if req.color:
+            args["color"] = self.marker_factory.getColor(req.color)
+          else:
+            args["color"] = self.marker_factory.getRandomColor()
+          if req.alpha > 0 and req.alpha <= 1:
+            args["color"].a = req.alpha
       # Parse scale and dimensions (height, length, depth, width and radius).
       if req.type != "Cylinder" and req.type != "Axis" and req.type != "Plane":
         if req.scaleVector3 != Vector3():
@@ -154,7 +155,7 @@ class MarkerManager(object):
       # Parse filename
       if req.type == "Mesh":
         if req.filename:
-          args["filename"] = req.filename
+          args["file_name"] = req.filename
         else:
           rospy.logerr("[" + rospy.get_name() + "]: Invalid filename")
           return {'success': False}
@@ -190,7 +191,8 @@ class MarkerManager(object):
 
 if __name__ == "__main__":
   rospy.init_node("rviz_tools_py")
-  marker_manager = MarkerManager()
+  base_frame = rospy.get_param('~base_frame', 'map')
+  marker_manager = MarkerManager(base_frame)
   marker_lines_server = rospy.Service('marker_lines_server', MarkerLines, marker_manager.lines_cb)
   rospy.loginfo("[" + rospy.get_name() + "]: marker_lines_server is ready")
   marker_shapes_server = rospy.Service('marker_shapes_server', MarkerShapes, marker_manager.shapes_cb)
