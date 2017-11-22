@@ -39,12 +39,11 @@ import numpy
 import random
 
 # ROS includes
-import roslib
 import rospy
 from geometry_msgs.msg import Pose, Point, Quaternion, Vector3, Polygon
 from tf import transformations # rotation_matrix(), concatenate_matrices()
 
-import rviz_tools_py as rviz_tools
+import rviz_tools
 
 
 # Initialize the ROS Node
@@ -58,7 +57,7 @@ def cleanup_node():
 rospy.on_shutdown(cleanup_node)
 
 
-markers = rviz_tools.RvizMarkers('world', 'visualization_marker')
+markers = rviz_tools.RvizMarkers('map', 'visualization_marker')
 
 
 while not rospy.is_shutdown():

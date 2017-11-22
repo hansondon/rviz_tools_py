@@ -34,7 +34,6 @@ import numpy
 import random # randint
 
 # ROS includes
-import roslib
 import rospy
 import tf # tf/transformations.py
 from std_msgs.msg import Header, ColorRGBA
@@ -62,6 +61,8 @@ class RvizMarkers(object):
         # Create the Rviz Marker Publisher
         self.loadMarkerPublisher(wait_time)
 
+        # Make a list of the color names to choose from
+        self.all_colors = ['red', 'green', 'blue', 'grey', 'white', 'orange', 'yellow', 'brown', 'pink', 'lime_green', 'purple']
 
     def setDefaultMarkerParams(self):
         """
@@ -296,12 +297,15 @@ class RvizMarkers(object):
 
     def getColor(self, color):
         """
-        Convert a color name or RGB value to a ROS ColorRGBA type
+        Return a ROS ColorRGBA type from a color name, RGB value or a ROS ColorRGBA value
 
-        @param color name (string) or RGB color value (tuple or list)
+        @param color name (string), RGB color value (tuple or list) or ROS ColorRGBA type
 
         @return color (ColorRGBA)
         """
+
+        if type(color) is ColorRGBA:
+            return color
 
         result = ColorRGBA()
         result.a = self.alpha
@@ -409,26 +413,11 @@ class RvizMarkers(object):
 
         @return color (ColorRGBA)
         """
-
-        # Make a list of the color names to choose from
-        all_colors = []
-        all_colors.append('red')
-        all_colors.append('green')
-        all_colors.append('blue')
-        all_colors.append('grey')
-        all_colors.append('white')
-        all_colors.append('orange')
-        all_colors.append('yellow')
-        all_colors.append('brown')
-        all_colors.append('pink')
-        all_colors.append('lime_green')
-        all_colors.append('purple')
-
         # Chose a random color name
-        rand_num =  random.randint(0, len(all_colors) - 1)
-        rand_color_name = all_colors[rand_num]
+        rand_num =  random.randint(0, len(self.all_colors) - 1)
+        rand_color_name = self.all_colors[rand_num]
 
-        return rand_color_name
+        return self.getColor(rand_color_name)
 
 
     def publishSphere(self, pose, color, scale, lifetime=None):
@@ -436,7 +425,7 @@ class RvizMarkers(object):
         Publish a sphere Marker. This renders 3D looking sphere.
 
         @param pose (numpy matrix, numpy ndarray, ROS Pose)
-        @param color name (string) or RGB color value (tuple or list)
+        @param color name (string), RGB color value (tuple or list) or ROS ColorRGBA type
         @param scale (ROS Vector3, float)
         @param lifetime (float, None = never expire)
         """
@@ -497,7 +486,7 @@ class RvizMarkers(object):
         Publish a sphere Marker. This renders a smoother, flatter-looking sphere.
 
         @param pose (numpy matrix, numpy ndarray, ROS Pose)
-        @param color name (string) or RGB color value (tuple or list)
+        @param color name (string), RGB color value (tuple or list) or ROS ColorRGBA type
         @param scale (ROS Vector3, float)
         @param lifetime (float, None = never expire)
         """
@@ -559,7 +548,7 @@ class RvizMarkers(object):
         Publish an arrow Marker.
 
         @param pose (numpy matrix, numpy ndarray, ROS Pose)
-        @param color name (string) or RGB color value (tuple or list)
+        @param color name (string), RGB color value (tuple or list) or ROS ColorRGBA type
         @param scale (ROS Vector3, float)
         @param lifetime (float, None = never expire)
         """
@@ -616,7 +605,7 @@ class RvizMarkers(object):
         Publish a cube Marker.
 
         @param pose (numpy matrix, numpy ndarray, ROS Pose)
-        @param color name (string) or RGB color value (tuple or list)
+        @param color name (string), RGB color value (tuple or list) or ROS ColorRGBA type
         @param scale (ROS Vector3, float)
         @param lifetime (float, None = never expire)
         """
@@ -673,7 +662,7 @@ class RvizMarkers(object):
         Publish a list of cubes.
 
         @param list_of_cubes (list of numpy matrix, list of numpy ndarray, list of ROS Pose)
-        @param color name (string) or RGB color value (tuple or list)
+        @param color name (string), RGB color value (tuple or list) or ROS ColorRGBA type
         @param scale (ROS Vector3, float)
         @param lifetime (float, None = never expire)
         """
@@ -745,7 +734,7 @@ class RvizMarkers(object):
         Publish a cube Marker.
 
         @param pose (numpy matrix, numpy ndarray, ROS Pose)
-        @param color name (string) or RGB color value (tuple or list)
+        @param color name (string), RGB color value (tuple or list) or ROS ColorRGBA type
         @param scale (ROS Vector3, float)
         @param lifetime (float, None = never expire)
         """
@@ -758,7 +747,7 @@ class RvizMarkers(object):
         Publish a cylinder Marker.
 
         @param pose (numpy matrix, numpy ndarray, ROS Pose)
-        @param color name (string) or RGB color value (tuple or list)
+        @param color name (string), RGB color value (tuple or list) or ROS ColorRGBA type
         @param height (float)
         @param radius (float)
         @param lifetime (float, None = never expire)
@@ -850,7 +839,7 @@ class RvizMarkers(object):
 
         @param pose (numpy matrix, numpy ndarray, ROS Pose)
         @param file_name (string)
-        @param color name (string) or RGB color value (tuple or list)
+        @param color name (string), RGB color value (tuple or list) or ROS ColorRGBA type
         @param scale (ROS Vector3, float)
         @param lifetime (float, None = never expire)
         """
@@ -915,7 +904,7 @@ class RvizMarkers(object):
 
         @param point1 (ROS Point)
         @param point2 (ROS Point)
-        @param color name (string) or RGB color value (tuple or list)
+        @param color name (string), RGB color value (tuple or list) or ROS ColorRGBA type
         @param lifetime (float, None = never expire)
         """
 
@@ -973,7 +962,7 @@ class RvizMarkers(object):
         @param pose (numpy matrix, numpy ndarray, ROS Pose)
         @param depth (float)
         @param width (float)
-        @param color name (string) or RGB color value (tuple or list)
+        @param color name (string), RGB color value (tuple or list) or ROS ColorRGBA type
         @param lifetime (float, None = never expire)
         """
 
@@ -1023,7 +1012,7 @@ class RvizMarkers(object):
 
         @param point1 (ROS Point, ROS Pose, numpy matrix, numpy ndarray)
         @param point2 (ROS Point, ROS Pose, numpy matrix, numpy ndarray)
-        @param color name (string) or RGB color value (tuple or list)
+        @param color name (string), RGB color value (tuple or list) or ROS ColorRGBA type
         @param width (float)
         @param lifetime (float, None = never expire)
         """
@@ -1091,7 +1080,7 @@ class RvizMarkers(object):
         Publish a path Marker using a set of waypoints.
 
         @param path (list of ROS Points)
-        @param color name (string) or RGB color value (tuple or list)
+        @param color name (string), RGB color value (tuple or list) or ROS ColorRGBA type
         @param width (float)
         @param lifetime (float, None = never expire)
         """
@@ -1174,7 +1163,7 @@ class RvizMarkers(object):
         Publish a polygon Marker.
 
         @param polygon (ROS Polygon)
-        @param color name (string) or RGB color value (tuple or list)
+        @param color name (string), RGB color value (tuple or list) or ROS ColorRGBA type
         @param width line width (float)
         @param lifetime (float, None = never expire)
 
@@ -1213,7 +1202,7 @@ class RvizMarkers(object):
         Publish a list of spheres. This renders smoother, flatter-looking spheres.
 
         @param list_of_spheres (list of numpy matrix, list of numpy ndarray, list of ROS Pose)
-        @param color name (string) or RGB color value (tuple or list)
+        @param color name (string), RGB color value (tuple or list) or ROS ColorRGBA type
         @param scale (ROS Vector3, float)
         @param lifetime (float, None = never expire)
         """
@@ -1287,7 +1276,7 @@ class RvizMarkers(object):
 
         @param pose (numpy matrix, numpy ndarray, ROS Pose)
         @param text (string)
-        @param color name (string) or RGB color value (tuple or list)
+        @param color name (string), RGB color value (tuple or list) or ROS ColorRGBA type
         @param scale (ROS Vector3, float)
         @param lifetime (float, None = never expire)
         """

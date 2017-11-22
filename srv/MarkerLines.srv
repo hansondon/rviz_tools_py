@@ -1,0 +1,18 @@
+# TYPE: Rectangle, Polygon, Line, Path
+# POINTS: points is a list of ROS points. For Rectangle and Line, the first 2 points
+# will be used. Polygon and Path will consume every point in the list to form a ROS
+# polygon or path, respectively.
+# COLOR: color can be specified in either ColorRGBA or a color name. When both
+# both present, ColorRGBA value is considered first. If not specified, the server
+# will pick a random color. Alpha will be used if provided.
+# WIDTH: width is used by Polygon, Line and Path.
+# LIFETIME_S: lifetime_s is the lifetime of a marker. 0 means never expires.string type
+string type
+geometry_msgs/Point[] points
+std_msgs/ColorRGBA colorRGBA
+string color
+float32 alpha
+float64 width
+uint32 lifetime_s
+---
+bool success

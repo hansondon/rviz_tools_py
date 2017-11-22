@@ -1,0 +1,33 @@
+# TYPE: Sphere, Cube, Cylinder, Arrow, Axis, Plane, Mesh, Text
+# POSES: for Sphere and Cube, a list of poses is supported; for other shapes 
+# only the first pose will be used.
+# COLOR: color can be specified in either ColorRGBA or a color name. When both
+# both present, ColorRGBA value is considered first. If not specified, the server
+# will pick a random color. Alpha will be used with color if provided.
+# SCALE: scale is only used by Sphere, Cube, Arrow, Mesh and Text. scaleVector3
+# will be considered first. If not available, use scale will set the same scale
+# value for 3 axes.
+# HEIGHT: height is used by Cylinder.
+# LENGTH: length is used by Axis.
+# DEPTH and WIDTH: depth and width are used by Plane.
+# RADUIS: radius is used by Cylinder and Axis.
+# FILENAME: filename of the Mesh.
+# TEXT: text is the string to be displayed by the Text marker.
+# LIFETIME_S: lifetime_s is the lifetime of a marker. 0 means never expires.
+string type
+geometry_msgs/Pose[] poses
+std_msgs/ColorRGBA colorRGBA
+string color
+float32 alpha
+geometry_msgs/Vector3 scaleVector3
+float64 scale
+float64 height
+float64 length
+float64 depth
+float64 width
+float64 radius
+string filename
+string text
+uint32 lifetime_s
+---
+bool success

@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<launch>
+  <arg name="base_frame" default="map" />
+
+  <node name="rviz_marker_server" type="rviz_marker_service" pkg="rviz_tools_py" output="screen">
+    <param name="base_frame" value="$(arg base_frame)" />
+  </node>
+</launch>
